@@ -1,1 +1,8 @@
 .idea
+.venv
+node_modules
+agent
+package.json
+package-lock.json
+tsconfig.json
+_agent.js

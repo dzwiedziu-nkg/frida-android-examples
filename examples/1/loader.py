@@ -1,15 +1,22 @@
-import time
-
+import os
+import sys
 import frida
 
-device = frida.get_usb_device()
-pid = device.spawn(["com.example.a11x256.frida_test"])
-device.resume(pid)
-time.sleep(1)  # Without it Java.perform silently fails
+APP = "com.example.a11x256.frida_test"
+
+def on_message(message, data):
+    print("[FRIDA]", message)
+
+compiler = frida.Compiler()
+bundle = compiler.build("agent.ts", project_root=os.getcwd())
+
+device = frida.get_usb_device(timeout=5)
+pid = device.spawn([APP])
 session = device.attach(pid)
-with open("s1.js") as f:
-    script = session.create_script(f.read())
+
+script = session.create_script(bundle)
+script.on("message", on_message)
 script.load()
 
-# prevent the python script from terminating
-raw_input()
+device.resume(pid)
+sys.stdin.read()
