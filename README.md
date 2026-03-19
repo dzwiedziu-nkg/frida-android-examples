@@ -2,7 +2,11 @@
 
 Original: https://github.com/11x256/frida-android-examples
 
-Current status: fixed `examples/1` example to work with frida 17.8.2 and Python 3.13 and Android 15.
+Current status: 
+- fixed `examples/1` example to work with frida 17.8.2 and Python 3.13 and Android 15.
+
+New examples:
+- `examples/mem_read` - read memory from a process running on a device
 
 ## Getting started
 
